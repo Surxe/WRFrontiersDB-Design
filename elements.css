@@ -1,0 +1,165 @@
+/*
+ * WRFrontiersDB-Design - shared element styles.
+ *
+ * Canonical look for the reusable UI elements both sites share: links, buttons,
+ * toggles, form controls, focus rings, scrollbars, and text selection. Built on
+ * the tokens in design-tokens.css. Imported by index.css (after the tokens).
+ *
+ * Global element rules (a, form controls, scrollbar, selection, :focus-visible)
+ * apply on their own. Buttons and toggles are opt-in classes (.wrf-btn,
+ * .wrf-toggle) so a consumer adopts them by adding the class in markup.
+ */
+
+/* ── Links: minimalist dotted underline ─────────────────────── */
+a {
+  color: var(--wrf-link);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--wrf-link-underline);
+  transition:
+    border-color var(--wrf-transition),
+    color var(--wrf-transition);
+}
+
+a:hover {
+  border-bottom-color: var(--wrf-link-hover);
+  color: var(--wrf-link-hover);
+}
+
+/* ── Buttons (opt-in: .wrf-btn + a variant) ─────────────────── */
+.wrf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--wrf-radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  /* override the global dotted link underline when a button is an <a> */
+  border-bottom: 1px solid transparent;
+  transition:
+    background var(--wrf-transition),
+    border-color var(--wrf-transition),
+    color var(--wrf-transition),
+    transform 0.1s ease;
+}
+
+.wrf-btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary: filled accent. Text is the dark bg for contrast on the light cyan. */
+.wrf-btn--primary {
+  background: var(--wrf-accent);
+  color: var(--wrf-bg);
+}
+
+.wrf-btn--primary:hover {
+  background: var(--wrf-accent-hover);
+  color: var(--wrf-bg);
+}
+
+/* Secondary: raised surface with an accent border on hover. */
+.wrf-btn--secondary {
+  background: var(--wrf-surface-2);
+  color: var(--wrf-text);
+  border-color: var(--wrf-border);
+}
+
+.wrf-btn--secondary:hover {
+  background: var(--wrf-border);
+  border-color: var(--wrf-accent);
+  color: var(--wrf-text);
+}
+
+/* ── Toggle / segmented control (opt-in: .wrf-toggle) ───────── */
+.wrf-toggle {
+  display: inline-flex;
+  width: fit-content;
+  background: var(--wrf-surface);
+  border: 1px solid var(--wrf-border);
+  border-radius: 999px;
+  padding: 0.25rem;
+}
+
+.wrf-toggle__btn {
+  background: none;
+  border: none;
+  color: var(--wrf-text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    color var(--wrf-transition),
+    background var(--wrf-transition);
+}
+
+.wrf-toggle__btn:hover {
+  color: var(--wrf-text);
+}
+
+.wrf-toggle__btn.active {
+  color: var(--wrf-bg);
+  background: var(--wrf-accent);
+}
+
+/* ── Form controls ──────────────────────────────────────────── */
+select,
+input,
+textarea {
+  background-color: var(--wrf-surface);
+  color: var(--wrf-text);
+  border: 1px solid var(--wrf-border);
+  padding: 8px 12px;
+  border-radius: var(--wrf-radius-sm);
+  font-family: inherit;
+}
+
+select option {
+  background-color: var(--wrf-surface);
+  color: var(--wrf-text);
+}
+
+/* ── Focus ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--wrf-accent);
+  outline-offset: 2px;
+}
+
+/* ── Scrollbars (WebKit/Blink) ──────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wrf-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wrf-border);
+  border-radius: var(--wrf-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wrf-text-muted);
+}
+
+/* ── Text selection ─────────────────────────────────────────── */
+::selection {
+  background-color: var(--wrf-accent);
+  color: var(--wrf-bg);
+}
+
+::-moz-selection {
+  background-color: var(--wrf-accent);
+  color: var(--wrf-bg);
+}

@@ -3,7 +3,8 @@
  *
  *   import 'vendor/wrf-design/index.css';   // Astro / Vite ESM import
  *
- * Order matters: register @font-face before the tokens that reference the font.
+ * Order matters: fonts and tokens must load before the element rules that use them.
  */
 @import './fonts.css';
 @import './design-tokens.css';
+@import './elements.css';

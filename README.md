@@ -72,10 +72,6 @@ links (`--wrf-link`, `--wrf-link-underline`, `--wrf-link-hover`), typography
 (`--wrf-font-sans`, `--wrf-font-mono`), shape/motion (`--wrf-radius-*`,
 `--wrf-transition`).
 
-The file also defines back-compat aliases for the visualizer's legacy token names
-(`--accent-color`, `--text-color`, ...); these are temporary and will be removed once
-the visualizer migrates to the `--wrf-*` names.
-
 ## Updating shared styles
 
 1. Commit and push a change here.

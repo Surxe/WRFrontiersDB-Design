@@ -1,0 +1,9 @@
+/*
+ * WRFrontiersDB-Design - entry point. Import THIS from a consuming repo:
+ *
+ *   import 'vendor/wrf-design/index.css';   // Astro / Vite ESM import
+ *
+ * Order matters: register @font-face before the tokens that reference the font.
+ */
+@import './fonts.css';
+@import './design-tokens.css';

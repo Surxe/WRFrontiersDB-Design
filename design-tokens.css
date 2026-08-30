@@ -1,0 +1,58 @@
+/*
+ * WRFrontiersDB design tokens - the single source of truth for the WRF Site and
+ * the WRF Discount Visualizer. Edit here; consumers pull this repo as a git
+ * submodule and import index.css. See README.md.
+ *
+ * Palette: the unified WRF cyan-on-charcoal dark theme.
+ */
+:root {
+  /* Surfaces */
+  --wrf-bg: #1a1a1a; /* page background */
+  --wrf-surface: #2a2a2a; /* cards, inputs, cells */
+  --wrf-surface-2: #333333; /* raised: table header, tooltip */
+  --wrf-border: #444444; /* hairlines, input borders */
+
+  /* Text */
+  --wrf-text: #ffffff;
+  --wrf-text-muted: #999999;
+
+  /* Accent (cyan) */
+  --wrf-accent: #4fc3f7;
+  --wrf-accent-hover: #29b6f6;
+  --wrf-accent-active-bg: rgba(79, 195, 247, 0.1);
+
+  /* Semantic */
+  --wrf-success: #81c784;
+  --wrf-warning: #ffc107;
+  --wrf-danger: #ef233c;
+
+  /* Links (dotted-underline treatment) */
+  --wrf-link: var(--wrf-text);
+  --wrf-link-underline: var(--wrf-text-muted);
+  --wrf-link-hover: var(--wrf-accent);
+
+  /* Typography */
+  --wrf-font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', sans-serif;
+  --wrf-font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+  /* Shape / motion */
+  --wrf-radius-sm: 4px;
+  --wrf-radius-md: 8px;
+  --wrf-transition: 0.2s ease;
+
+  /*
+   * Back-compat aliases - the visualizer's legacy token names mapped onto the
+   * unified tokens. This lets the vis's existing var-based CSS adopt the unified
+   * palette with no component edits. Remove once the vis migrates to --wrf-*
+   * (Phase 2 of the style rework).
+   */
+  --accent-color: var(--wrf-accent);
+  --accent-hover: var(--wrf-accent-hover);
+  --text-color: var(--wrf-text);
+  --text-muted: var(--wrf-text-muted);
+  --bg-color: var(--wrf-bg);
+  --sidebar-bg: var(--wrf-surface);
+  --sidebar-border: var(--wrf-border);
+  --active-bg: var(--wrf-accent-active-bg);
+}

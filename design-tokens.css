@@ -40,19 +40,4 @@
   --wrf-radius-sm: 4px;
   --wrf-radius-md: 8px;
   --wrf-transition: 0.2s ease;
-
-  /*
-   * Back-compat aliases - the visualizer's legacy token names mapped onto the
-   * unified tokens. This lets the vis's existing var-based CSS adopt the unified
-   * palette with no component edits. Remove once the vis migrates to --wrf-*
-   * (Phase 2 of the style rework).
-   */
-  --accent-color: var(--wrf-accent);
-  --accent-hover: var(--wrf-accent-hover);
-  --text-color: var(--wrf-text);
-  --text-muted: var(--wrf-text-muted);
-  --bg-color: var(--wrf-bg);
-  --sidebar-bg: var(--wrf-surface);
-  --sidebar-border: var(--wrf-border);
-  --active-bg: var(--wrf-accent-active-bg);
 }

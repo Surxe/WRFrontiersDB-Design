@@ -17,7 +17,7 @@ so that becomes a folder move, not a rewrite.
 | --- | --- |
 | `index.css` | Entry point - `@import`s fonts, tokens, then elements. Import this. |
 | `design-tokens.css` | `:root` custom properties (`--wrf-*`) - the unified palette + scale. |
-| `elements.css` | Shared element styles - links, buttons (`.wrf-btn`), toggles (`.wrf-toggle`), form controls, focus, scrollbars, selection. |
+| `elements.css` | Shared element styles - links, buttons (`.wrf-btn`), toggles (`.wrf-toggle`), tooltips (`.wrf-tooltip`), form controls, focus, scrollbars, selection. |
 | `fonts.css` | `@font-face` for self-hosted Montserrat 400/500/700. |
 | `fonts/` | Vendored Montserrat `.woff2` (latin subset). |
 | `OFL.txt` | SIL Open Font License 1.1 for Montserrat. |

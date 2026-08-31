@@ -111,6 +111,69 @@ a:hover {
   background: var(--wrf-accent);
 }
 
+/* ── Tooltips (opt-in: .wrf-tooltip wrapper) ────────────────────
+ * Canonical look for the "?" info tooltip: a subtle circular icon and a raised
+ * bubble revealed on hover/focus. Positioning is the default (centered above the
+ * icon); a consumer that needs overflow-escape or tap-to-toggle layers its own
+ * position/JS on top (the CSS-only reveal here still applies the look). */
+.wrf-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
+.wrf-tooltip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--wrf-surface-2);
+  color: var(--wrf-text-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.wrf-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 220px;
+  padding: 0.5rem 0.65rem;
+  background: var(--wrf-surface-2);
+  border: 1px solid var(--wrf-border);
+  border-radius: var(--wrf-radius-md);
+  color: var(--wrf-text);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  /* tooltips often sit inside uppercase labels; keep their own text readable */
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--wrf-transition),
+    visibility var(--wrf-transition);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.wrf-tooltip:hover .wrf-tooltip__bubble,
+.wrf-tooltip:focus .wrf-tooltip__bubble,
+.wrf-tooltip:focus-visible .wrf-tooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* ── Form controls ──────────────────────────────────────────── */
 select,
 input,

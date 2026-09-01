@@ -112,10 +112,12 @@ a:hover {
 }
 
 /* ── Tooltips (opt-in: .wrf-tooltip wrapper) ────────────────────
- * Canonical look for the "?" info tooltip: a subtle circular icon and a raised
- * bubble revealed on hover/focus. Positioning is the default (centered above the
- * icon); a consumer that needs overflow-escape or tap-to-toggle layers its own
- * position/JS on top (the CSS-only reveal here still applies the look). */
+ * Canonical look AND behaviour for the "?" info tooltip: a subtle circular icon
+ * and a raised bubble revealed on hover/focus. The bubble is position:fixed so it
+ * escapes any overflow:hidden/auto ancestor (cards, scrolling tables); it is
+ * placed by the shared `wrf-tooltip.js` positioning script, which each consumer
+ * ships identically (this repo hosts CSS only). A consumer that uses .wrf-tooltip
+ * MUST load that script, or the bubble anchors to the viewport corner. */
 .wrf-tooltip {
   position: relative;
   display: inline-flex;
@@ -139,12 +141,14 @@ a:hover {
 }
 
 .wrf-tooltip__bubble {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(calc(-50% + var(--tt-shift, 0px)), calc(-100% - 8px));
   width: max-content;
   max-width: 220px;
+  /* reset any inherited nowrap (tooltips sit inside nowrap headers/labels) */
+  white-space: normal;
   padding: 0.5rem 0.65rem;
   background: var(--wrf-surface-2);
   border: 1px solid var(--wrf-border);

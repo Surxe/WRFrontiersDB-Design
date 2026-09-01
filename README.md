@@ -63,6 +63,45 @@ Plain CSS only - no preprocessor syntax - so it works whether a consumer bundles
 
    Fresh local clones: `git submodule update --init --recursive`.
 
+## Tooltip positioning script (`.wrf-tooltip`)
+
+`.wrf-tooltip__bubble` is `position: fixed` so it escapes any `overflow` ancestor.
+It is placed by a tiny script. This repo hosts **CSS only**, so each consumer ships
+an identical copy of the script below (site: `public/js/wrf-tooltip.js`; visualizer:
+`src/frontend/src/scripts/wrf-tooltip.js`) and keeps it in sync with this canonical
+source. Any page using `.wrf-tooltip` must load it.
+
+```js
+// Positions .wrf-tooltip__bubble above its icon and nudges it back inside the
+// viewport near an edge. Mirror of WRFrontiersDB-Design/README.md - keep in sync.
+const MARGIN = 8;
+
+function placeBubble(tip) {
+  const bubble = tip.querySelector('.wrf-tooltip__bubble');
+  if (!bubble) return;
+  const icon = tip.getBoundingClientRect();
+  bubble.style.setProperty('--tt-shift', '0px');
+  bubble.style.left = `${icon.left + icon.width / 2}px`;
+  bubble.style.top = `${icon.top}px`;
+  const rect = bubble.getBoundingClientRect();
+  let shift = 0;
+  if (rect.right > window.innerWidth - MARGIN) {
+    shift = -(rect.right - (window.innerWidth - MARGIN));
+  } else if (rect.left < MARGIN) {
+    shift = MARGIN - rect.left;
+  }
+  if (shift !== 0) bubble.style.setProperty('--tt-shift', `${shift}px`);
+}
+
+function handle(e) {
+  const tip = e.target && e.target.closest && e.target.closest('.wrf-tooltip');
+  if (tip) placeBubble(tip);
+}
+
+document.addEventListener('mouseover', handle);
+document.addEventListener('focusin', handle);
+```
+
 ## Tokens
 
 See `design-tokens.css` for the authoritative list. Groups: surfaces (`--wrf-bg`,

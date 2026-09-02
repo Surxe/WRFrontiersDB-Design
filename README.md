@@ -24,6 +24,7 @@ how a change reaches the live sites.
 | `elements.css` | Shared element styles - links, buttons (`.wrf-btn`), toggles (`.wrf-toggle`), tooltips (`.wrf-tooltip`), form controls, focus, scrollbars, selection. |
 | `fonts.css` | `@font-face` for self-hosted Montserrat 400/500/700. |
 | `fonts/` | Vendored Montserrat `.woff2` (latin subset). |
+| `lint-styles.cjs` | Zero-dep style linter - flags raw chrome hex in a consumer's CSS. |
 | `OFL.txt` | SIL Open Font License 1.1 for Montserrat. |
 
 Plain CSS only - no preprocessor syntax - so it works whether a consumer bundles it
@@ -115,6 +116,45 @@ See `design-tokens.css` for the authoritative list. Groups: surfaces (`--wrf-bg`
 links (`--wrf-link`, `--wrf-link-underline`, `--wrf-link-hover`), typography
 (`--wrf-font-sans`, `--wrf-font-mono`), shape/motion (`--wrf-radius-*`,
 `--wrf-transition`).
+
+## Linting consumer styles (`lint-styles.cjs`)
+
+A zero-dependency Node script (Node >= 16) that guards the "use tokens, not raw
+chrome hex" rule in a consumer. It scans `.css` files and the `<style>` blocks of
+`.astro` files, and flags any hex color literal that is not on that consumer's
+DOMAIN-color allow list. It lives here so the rule has a single source of truth;
+each consumer supplies a small `.wrf-lint.json` for its own domain colors and
+paths. Run it from the consumer's repo root:
+
+```sh
+node <submodule-path>/lint-styles.cjs --config .wrf-lint.json
+```
+
+Config (`.wrf-lint.json`):
+
+```json
+{
+  "roots": ["src"],
+  "extensions": [".astro", ".css"],
+  "excludeDirs": ["vendor", "dist"],
+  "allow": ["#5865f2", "#fff176"]
+}
+```
+
+- `roots` - dirs to scan (relative to the repo root). `extensions` and
+  `excludeDirs` are optional (`vendor`, `node_modules`, `dist`, `.astro`, `.git`
+  are always excluded, so the submodule's own token file is never scanned).
+- `allow` - the DOMAIN colors that intentionally stay raw (rarity / faction /
+  talent / savings greens / brand blurple / gradient stops). 3- and 6-digit forms
+  match interchangeably.
+- **Inline escape:** a hex on a line whose comment contains `wrf-allow-hex` is
+  ignored, for a genuine one-off.
+
+Exits non-zero with `file:line` for each violation. Wire it into CI as a
+pull-request check (each consumer adds an npm script + workflow step).
+
+Scope note: it scans `<style>` blocks and `.css`, not inline `style="..."`
+attributes or hex inside JS/TS - keep chrome colors out of those by convention.
 
 ## Local development & testing
 

@@ -11,6 +11,10 @@ Both pull this repo in as a git submodule so the two sites stay visually in sync
 remaining separately deployed. Longer term the sites may merge; this repo is structured
 so that becomes a folder move, not a rewrite.
 
+The human-readable **[Style Guide](./STYLE-GUIDE.md)** documents the palette, typography,
+and reusable elements. This README covers consuming the submodule, the local dev loop, and
+how a change reaches the live sites.
+
 ## Contents
 
 | File | Purpose |
@@ -112,12 +116,60 @@ links (`--wrf-link`, `--wrf-link-underline`, `--wrf-link-hover`), typography
 (`--wrf-font-sans`, `--wrf-font-mono`), shape/motion (`--wrf-radius-*`,
 `--wrf-transition`).
 
-## Updating shared styles
+## Local development & testing
 
-1. Commit and push a change here.
-2. In each consuming repo, bump the submodule pointer:
+You do **not** need CI (or even a submodule pointer bump) to *test* a change to the shared
+CSS. Both consumers import this repo's CSS as a relative ESM import
+(`import '.../vendor/wrf-design/index.css'`) straight into their Vite module graph - there
+is no copy-into-`public/` step - so **editing a file in the submodule checkout hot-reloads
+live in the consumer's dev server.** The pinned submodule SHA and CI only decide what a
+*fresh clone* builds; a local dev server reads your working tree.
+
+The loop (pick the consumer you want to see the change in):
+
+1. **Branch inside the submodule checkout first**, so edits are committable and not lost.
+   The submodule is checked out at the pinned SHA (detached HEAD):
 
    ```sh
-   git -C vendor/wrf-design pull origin main
+   cd vendor/wrf-design         # or src/frontend/vendor/wrf-design in the visualizer
+   git switch -c my-change
+   ```
+
+2. **Edit the CSS** here (`elements.css`, `design-tokens.css`, ...).
+
+3. **Run that consumer's dev server** from the consumer's project root and verify by HMR:
+   - **WRFrontiersDB-Site**: use its `run-dev-server` skill (Astro dev at repo root).
+   - **WRFrontiers-Discount-Visualizer**: `npm run dev` in `src/frontend`.
+
+   A `npm run build` in the consumer is a good non-visual smoke test that everything still
+   resolves and bundles.
+
+**Gotcha - independent checkouts.** WRFrontiersDB-Site and WRFrontiers-Discount-Visualizer
+hold *separate* submodule working copies; editing one does not touch the other. To compare
+the change in both, push your branch and check it out in the other consumer's submodule
+(`git -C <its-submodule-path> fetch && git switch my-change`), then run its dev server.
+
+## Shipping a change (how it reaches the live sites)
+
+This repo has **no deploy of its own** - it is a CSS/asset library, and each consumer pins
+it to a specific commit (a gitlink SHA). Merging here does **not** change either live site.
+Propagation is an explicit 3-step chain:
+
+1. **Merge** the change here (PR → `main`).
+2. **Bump the submodule pointer in EACH consumer** and commit the new gitlink, via a PR:
+
+   ```sh
+   git -C vendor/wrf-design pull origin main      # or src/frontend/vendor/wrf-design
    git add vendor/wrf-design && git commit -m "Bump wrf-design"
    ```
+
+   Until this lands, that consumer keeps building against the OLD pinned commit.
+3. **Redeploy the consumer** - and the two differ:
+   - **WRFrontiersDB-Site** auto-deploys on push to `main`. Its PR base is `dev`, so the
+     bump must still be promoted `dev` → `main` to go live.
+   - **WRFrontiers-Discount-Visualizer** deploys **only** via a manual `workflow_dispatch`
+     (Actions tab / `gh workflow run`). Merging to `main` does not deploy it.
+
+CI in both consumers already checks out submodules recursively, so whatever SHA is pinned
+is what gets built. When the two consumers eventually merge, steps 1-2 collapse into one
+ordinary commit.

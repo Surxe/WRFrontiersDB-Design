@@ -21,7 +21,7 @@ how a change reaches the live sites.
 | --- | --- |
 | `index.css` | Entry point - `@import`s fonts, tokens, then elements. Import this. |
 | `design-tokens.css` | `:root` custom properties (`--wrf-*`) - the unified palette + scale. |
-| `elements.css` | Shared element styles - links, buttons (`.wrf-btn`), toggles (`.wrf-toggle`), tooltips (`.wrf-tooltip`), form controls, focus, scrollbars, selection. |
+| `elements.css` | Shared element styles - links, buttons (`.wrf-btn`, `.wrf-link-btn`), toggles (`.wrf-toggle`), panels (`.wrf-panel`), custom select (`.wrf-select` / `.wrf-listbox`), tooltips (`.wrf-tooltip`), form controls, focus, scrollbars, selection. |
 | `fonts.css` | `@font-face` for self-hosted Montserrat 400/500/700. |
 | `fonts/` | Vendored Montserrat `.woff2` (latin subset). |
 | `lint-styles.cjs` | Zero-dep style linter - flags raw chrome hex in a consumer's CSS. |

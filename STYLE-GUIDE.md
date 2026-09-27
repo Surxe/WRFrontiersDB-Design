@@ -121,6 +121,17 @@ on `:active`.
 <a class="wrf-btn wrf-btn--secondary" href="/">Back home</a>
 ```
 
+Add `.wrf-btn--sm` (with either variant) for a compact button in a dense panel.
+
+### Link button — `.wrf-link-btn`
+
+A `<button>` that looks exactly like a link (dotted underline, accent on hover), for
+in-text actions that are not navigation - "revert", a clickable table label.
+
+```html
+<button type="button" class="wrf-link-btn">Use A</button>
+```
+
 ### Toggle / segmented control — `.wrf-toggle`
 
 A pill group of `.wrf-toggle__btn`; the selected one carries `.active` (accent fill, dark
@@ -130,6 +141,49 @@ text). Wire selection in the consumer's JS.
 <div class="wrf-toggle">
   <button class="wrf-toggle__btn active">Grid</button>
   <button class="wrf-toggle__btn">Timeline</button>
+</div>
+```
+
+A button can instead carry `aria-pressed="true"` (same look as `.active`), so assistive
+tech announces the state. `.wrf-toggle--sm` is the compact size for dense panels.
+
+```html
+<div class="wrf-toggle wrf-toggle--sm" role="group" aria-label="Camera side">
+  <button type="button" class="wrf-toggle__btn" aria-pressed="true">Front</button>
+  <button type="button" class="wrf-toggle__btn" aria-pressed="false">Back</button>
+</div>
+```
+
+### Panel — `.wrf-panel`
+
+The bordered surface for a page section (`--wrf-surface`, `--wrf-border`,
+`--wrf-radius-md`). `.wrf-panel--inset` is a card nested inside a panel: page background,
+`--wrf-radius-sm`, tighter padding.
+
+```html
+<section class="wrf-panel">
+  <article class="wrf-panel wrf-panel--inset">...</article>
+</section>
+```
+
+### Custom select — `.wrf-select` + `.wrf-listbox`
+
+For a dropdown whose options need rich content (icons, badges) a native `<select>` can't
+show: a `.wrf-select` trigger (form-control look with a caret) that opens a `.wrf-listbox`
+popup of `.wrf-listbox__option`s (optionally split by `.wrf-listbox__group` headers). The
+selected option carries `aria-selected="true"`; the highlighted one `.is-active`. The
+wrapper must be `position: relative`, and the consumer's JS owns the ARIA listbox
+behaviour (keyboard, focus, open/close).
+
+```html
+<div style="position: relative">
+  <button type="button" class="wrf-select" aria-haspopup="listbox" aria-expanded="true">
+    Typhon
+  </button>
+  <ul class="wrf-listbox" role="listbox">
+    <li class="wrf-listbox__group" role="presentation">Robots</li>
+    <li class="wrf-listbox__option is-active" role="option" aria-selected="true">Typhon</li>
+  </ul>
 </div>
 ```
 
@@ -180,7 +234,8 @@ the body font globally. No class needed.
 
 **Do**
 - Reach for a `var(--wrf-*)` token for any chrome color, font, radius, or transition.
-- Add `.wrf-btn` / `.wrf-toggle` / `.wrf-tooltip` rather than restyling a bare element.
+- Add `.wrf-btn` / `.wrf-link-btn` / `.wrf-toggle` / `.wrf-panel` / `.wrf-select` /
+  `.wrf-tooltip` rather than restyling a bare element.
 - Keep component CSS scoped in the consumer; the shared layer stays here.
 
 **Don't**

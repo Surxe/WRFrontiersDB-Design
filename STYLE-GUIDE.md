@@ -187,6 +187,23 @@ behaviour (keyboard, focus, open/close).
 </div>
 ```
 
+**Searchable variant.** For long option lists, the popup becomes a
+`.wrf-listbox.wrf-listbox--searchable` wrapper: a `.wrf-listbox__search` input pinned at the
+top above a scrolling `.wrf-listbox__list` (which carries `role="listbox"`). The consumer's
+JS filters by toggling `hidden` on options and group headers, and shows a
+`.wrf-listbox__empty` line when nothing matches. Focus sits in the input (a
+`role="combobox"` pointing at the list via `aria-controls` / `aria-activedescendant`).
+
+```html
+<div class="wrf-listbox wrf-listbox--searchable">
+  <input type="search" class="wrf-listbox__search" role="combobox" placeholder="Search..." />
+  <ul class="wrf-listbox__list" role="listbox">
+    <li class="wrf-listbox__option is-active" role="option" aria-selected="true">Typhon</li>
+    <li class="wrf-listbox__empty" hidden>No matches</li>
+  </ul>
+</div>
+```
+
 ### Tooltip — `.wrf-tooltip`
 
 A "?" info affordance: a subtle circular icon (`.wrf-tooltip__icon`, surface-2) and a

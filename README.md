@@ -205,8 +205,8 @@ Propagation is an explicit 3-step chain:
 
    Until this lands, that consumer keeps building against the OLD pinned commit.
 3. **Redeploy the consumer** - and the two differ:
-   - **WRFrontiersDB-Site** auto-deploys on push to `main`. Its PR base is `dev`, so the
-     bump must still be promoted `dev` → `main` to go live.
+   - **WRFrontiersDB-Site** auto-deploys on push to `main` (also its PR base), so merging
+     the bump PR is enough to go live.
    - **WRFrontiers-Discount-Visualizer** deploys **only** via a manual `workflow_dispatch`
      (Actions tab / `gh workflow run`). Merging to `main` does not deploy it.
 

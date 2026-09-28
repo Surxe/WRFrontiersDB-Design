@@ -256,6 +256,48 @@ a:hover {
   text-transform: uppercase;
 }
 
+/* Searchable: the popup is a `.wrf-listbox--searchable` wrapper holding a
+ * `.wrf-listbox__search` input pinned above a scrolling `.wrf-listbox__list`
+ * (the element with role="listbox"). `.wrf-listbox__empty` is the "no matches"
+ * line; the consumer's JS filters by toggling `hidden`. */
+.wrf-listbox--searchable {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.wrf-listbox--searchable[hidden] {
+  display: none;
+}
+
+.wrf-listbox__search {
+  flex: none;
+  margin: 0.3rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.85rem;
+}
+
+.wrf-listbox__list {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 0.2rem;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.wrf-listbox__list:focus {
+  outline: none;
+}
+
+.wrf-listbox__empty {
+  padding: 0.2rem 0.5rem;
+  color: var(--wrf-text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
 /* ── Tooltips (opt-in: .wrf-tooltip wrapper) ────────────────────
  * Canonical look AND behaviour for the "?" info tooltip: a subtle circular icon
  * and a raised bubble revealed on hover/focus. The bubble is position:fixed so it

@@ -11,6 +11,9 @@
   --wrf-surface: #2a2a2a; /* cards, inputs, cells */
   --wrf-surface-2: #333333; /* raised: table header, tooltip */
   --wrf-border: #444444; /* hairlines, input borders */
+  /* Translucent page background, for controls and labels floated over an
+     image or canvas, so what is underneath still shows through. */
+  --wrf-overlay-bg: color-mix(in srgb, var(--wrf-bg) 72%, transparent);
 
   /* Text */
   --wrf-text: #ffffff;
@@ -40,4 +43,8 @@
   --wrf-radius-sm: 4px;
   --wrf-radius-md: 8px;
   --wrf-transition: 0.2s ease;
+
+  /* Touch: the minimum height of a tappable control on a coarse pointer
+     (elements.css applies it). */
+  --wrf-touch-target: 2.75rem;
 }

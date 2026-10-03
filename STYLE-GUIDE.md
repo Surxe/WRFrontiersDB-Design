@@ -46,6 +46,7 @@ The unified WRF theme: cyan accent on charcoal. All values are tokens in
 | `--wrf-surface` | `#2a2a2a` | Cards, inputs, cells |
 | `--wrf-surface-2` | `#333333` | Raised: table header, tooltip bubble |
 | `--wrf-border` | `#444444` | Hairlines, input borders |
+| `--wrf-overlay-bg` | `--wrf-bg` at 72% | Controls and labels floated over an image or canvas |
 
 ### Text
 
@@ -235,6 +236,13 @@ the body font globally. No class needed.
   to `--wrf-text-muted` on hover.
 - **Selection:** `--wrf-accent` background, `--wrf-bg` text.
 
+### Touch targets
+
+On a coarse pointer (`@media (pointer: coarse)`, i.e. a finger), `.wrf-btn`,
+`.wrf-toggle__btn` and `.wrf-select` grow to at least `--wrf-touch-target` tall, the `--sm`
+sizes included. Nothing to opt into. Give your own tappable controls (icon buttons, say)
+the same minimum.
+
 ---
 
 ## Scale & motion
@@ -244,6 +252,7 @@ the body font globally. No class needed.
 | `--wrf-radius-sm` | `4px` | Inputs, small chips, scrollbar thumb |
 | `--wrf-radius-md` | `8px` | Cards, buttons, tooltip bubble |
 | `--wrf-transition` | `0.2s ease` | Standard hover/state transition |
+| `--wrf-touch-target` | `2.75rem` | Minimum tappable height on touch screens |
 
 ---
 

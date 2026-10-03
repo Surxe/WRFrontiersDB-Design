@@ -417,3 +417,15 @@ select option {
   background-color: var(--wrf-accent);
   color: var(--wrf-bg);
 }
+
+/* ── Touch targets ──────────────────────────────────────────────
+ * On a coarse pointer (a finger), buttons, toggles and selects grow to a full
+ * tap target, the compact sizes included. Widths stay as they are.
+ * Last in the file, so it wins over each element's own min-height. */
+@media (pointer: coarse) {
+  .wrf-btn,
+  .wrf-toggle__btn,
+  .wrf-select {
+    min-height: var(--wrf-touch-target);
+  }
+}
